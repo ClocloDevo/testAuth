@@ -35,9 +35,12 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
+            //Récupérer l'utilisateur via son email
             new UserBadge($email),
+            //Récupérer le pwd qui a été saisi
             new PasswordCredentials($request->request->get('password', '')),
             [
+                //Jeton sécurité pour vérifier que le formulaire vient bien de notre site
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
             ]
         );
@@ -45,10 +48,12 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        //Chemin de retour pour que l'utilisateur revienne sur la page sur laquelle il était quand il s'est connecté
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
+        //Rediriger l'utilisateur vers une page particulière
         // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

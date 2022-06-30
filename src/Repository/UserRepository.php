@@ -26,6 +26,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function add(User $entity, bool $flush = false): void
     {
+        // guarantee every user at least has ROLE_USER
+        //$roles[] = 'ROLE_USER';
+        $entity->addRole('ROLE_USER');
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
