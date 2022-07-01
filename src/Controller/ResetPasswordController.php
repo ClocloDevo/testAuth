@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\ResetPassword;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
@@ -53,9 +54,9 @@ class ResetPasswordController extends AbstractController
                 $content = "Bonjour " . $user->getLastname() . ",<br>Vous avez demandé à réinitialiser votre mot de passe sur l'application Stegi.<br><br>";
                 $content .= "Merci de bien vouloir cliquer sur le lien suivant pour <a href=''" . $url . "'>mettre à jour votre mot de passe</a>.";
 
-                //$mail = new Mail();
-                //$mail->send($user->getEmail(), $user->getLastname(), 'Réinitialiser votre mot de passe sur Stegi',
-                // $content);
+                $mail = new Mail();
+                $mail->send($user->getEmail(), $user->getLastname(), 'Réinitialiser votre mot de passe sur Stegi',
+                $content);
                 $this->addFlash('notice', 'Vous allez recevoir dans quelques secondes un mail avec la procédure à suivre pour réinitialiser votre mot de passe.');
             } else {
                     $this->addFlash('notice', 'Cette adresse email est inconnue.');
@@ -70,6 +71,7 @@ class ResetPasswordController extends AbstractController
     {
         //dd($token);
         $reset_password = $this->entityManager->getRepository(ResetPassword::class)->findOneByToken($token);
+
         if (!$reset_password) {
             // Equivalent à quelque chose ne s'est pas passé correctement.
             return $this->redirectToRoute('app_reset_password');
@@ -89,7 +91,7 @@ class ResetPasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $new_pwd = $form->get('new_password')->getData();
-            dd($new_pwd);
+            //dd($new_pwd);
 
             // Encodage des mots de passe
             $password = $hasher->hashPassword($reset_password->getUser(), $new_pwd);
