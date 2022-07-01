@@ -52,10 +52,10 @@ class ResetPasswordController extends AbstractController
                 ]);
 
                 $content = "Bonjour " . $user->getLastname() . ",<br>Vous avez demandé à réinitialiser votre mot de passe sur l'application Stegi.<br><br>";
-                $content .= "Merci de bien vouloir cliquer sur le lien suivant pour <a href=''" . $url . "'>mettre à jour votre mot de passe</a>.";
+                $content .= "Merci de bien vouloir cliquer sur le lien suivant pour <br><a href='" . $url . "'>mettre à jour votre mot de passe</a>.";
 
                 $mail = new Mail();
-                $mail->send($user->getEmail(), $user->getLastname(), 'Réinitialiser votre mot de passe sur Stegi',
+                $mail->send($user->getEmail(), $user->getLastname(), 'Stegi - Réinitialiser votre mot de passe',
                 $content);
                 $this->addFlash('notice', 'Vous allez recevoir dans quelques secondes un mail avec la procédure à suivre pour réinitialiser votre mot de passe.');
             } else {
