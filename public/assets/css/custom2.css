@@ -3,7 +3,15 @@
     border-color: #28a745;
 }
 
+.form-group.success input {
+    border-color: #28a745;
+}
+
 .form-group.col-6.pl-0.error input {
+    border-color: #dc3545;
+}
+
+.form-group.error input {
     border-color: #dc3545;
 }
 

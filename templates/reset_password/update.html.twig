@@ -13,7 +13,7 @@
         {% for message in app.flashes('notice') %}
             <div class="alert alert-info">{{ message }}</div>
         {% endfor %}
-        {{ form(form) }}
+        {{ form(form, {'attr': {'id': 'signup'}}) }}
     </div>
 
 {% endblock %}
