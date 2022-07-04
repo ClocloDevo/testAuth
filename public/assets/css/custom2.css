@@ -1,0 +1,12 @@
+
+.form-group.col-6.pl-0.success input {
+    border-color: #28a745;
+}
+
+.form-group.col-6.pl-0.error input {
+    border-color: #dc3545;
+}
+
+.form-group span {
+    color: #dc3545;
+}
