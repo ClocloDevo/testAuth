@@ -4,28 +4,40 @@ const passwordEl = document.querySelector('#inputPassword');
 const form = document.querySelector('#signup');
 
 
-form.addEventListener('submit', function (e) {
-    // prevent the form from submitting
-    e.preventDefault();
-
-    // validate forms
-    let isEmailValid = checkEmail(),
-        isPasswordValid = checkPassword();
-
-    let isFormValid = isEmailValid &&
-        isPasswordValid;
-
-    // submit to the server if the form is valid
-    if (isFormValid) {
-
+// The checkEmail() function returns true if the email is provided and valid
+const checkEmail = () => {
+    let valid = false;
+    const email = emailEl.value.trim();
+    if (!isRequired(email)) {
+        showError(emailEl, 'Email requis');
+    } else if (!isEmailValid(email)) {
+        showError(emailEl, 'Email invalide')
+    } else {
+        showSuccess(emailEl);
+        valid = true;
     }
-});
+    return valid;
+}
 
-// The following isRequired() function returns true if the input argument is empty
-const isRequired = value => value === '' ? false : true;
+// The following checkPassword() function checks the password field if it is provided and matches the required format
+const checkPassword = () => {
+    let valid = false;
 
-// The following isBetween() function returns false if the length argument is not between the min and max argument
-const isBetween = (length, min, max) => length < min || length > max ? false : true;
+    const password = passwordEl.value.trim();
+
+    if (!isRequired(password)) {
+        showError(passwordEl, 'Mot de passe requis');
+    } else if (!isPasswordSecure(password)) {
+        showError(passwordEl, 'Le mot de passe doit contenir au moins 8 caractères dont 1 minuscule,' +
+            ' 1 majuscule, 1 chiffre et 1 caractère spécial' +
+            ' parmi (!@#$%^&*)');
+    } else {
+        showSuccess(passwordEl);
+        valid = true;
+    }
+
+    return valid;
+};
 
 // To check if the email is valid, use a regular expression
 const isEmailValid = (email) => {
@@ -38,6 +50,12 @@ const isPasswordSecure = (password) => {
     const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     return re.test(password);
 };
+
+// The following isRequired() function returns true if the input argument is empty
+const isRequired = value => value === '' ? false : true;
+
+// The following isBetween() function returns false if the length argument is not between the min and max argument
+const isBetween = (length, min, max) => length < min || length > max ? false : true;
 
 // This function highlights the border of the input field and displays an error message if the input field is invalid
 const showError = (input, message) => {
@@ -66,50 +84,22 @@ const showSuccess = (input) => {
     error.textContent = '';
 }
 
-// The checkEmail() function returns true if the email is provided and valid
-const checkEmail = () => {
-    let valid = false;
-    const email = emailEl.value.trim();
-    if (!isRequired(email)) {
-        showError(emailEl, 'Email requis');
-    } else if (!isEmailValid(email)) {
-        showError(emailEl, 'Email invalide')
-    } else {
-        showSuccess(emailEl);
-        valid = true;
+form.addEventListener('submit', function (e) {
+    // prevent the form from submitting
+    e.preventDefault();
+
+    // validate forms
+    let isEmailValid = checkEmail(),
+        isPasswordValid = checkPassword();
+
+    let isFormValid = isEmailValid &&
+        isPasswordValid;
+
+    // submit to the server if the form is valid
+    if (isFormValid) {
+
     }
-    return valid;
-}
-
-// The following checkPassword() function checks the password field if it is provided and matches the required format
-const checkPassword = () => {
-    let valid = false;
-
-    const password = passwordEl.value.trim();
-
-    if (!isRequired(password)) {
-        showError(passwordEl, 'Password cannot be blank.');
-    } else if (!isPasswordSecure(password)) {
-        showError(passwordEl, 'Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 number, and 1 special character in (!@#$%^&*)');
-    } else {
-        showSuccess(passwordEl);
-        valid = true;
-    }
-
-    return valid;
-};
-
-// Provides instant feedback
-form.addEventListener('input', debounce(function (e) {
-    switch (e.target.id) {
-        case 'email':
-            checkEmail();
-            break;
-        case 'password':
-            checkPassword();
-            break;
-    }
-}));
+});
 
 // wait for the users to pause the typing for a small amount of time or stop typing before validating the input
 const debounce = (fn, delay = 500) => {
@@ -125,3 +115,16 @@ const debounce = (fn, delay = 500) => {
         }, delay);
     };
 };
+
+// Provides instant feedback
+form.addEventListener('input', debounce(function (e) {
+    switch (e.target.id) {
+        case 'inputEmail':
+            checkEmail();
+            break;
+        case 'inputPassword':
+            checkPassword();
+            break;
+    }
+}));
+
