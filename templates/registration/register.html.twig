@@ -4,29 +4,33 @@
 
 {% block content %}
     <h1>Inscription</h1>
-    {{ form(registrationForm) }}
+{#    {{ form(registrationForm, {'attr': {'id': 'signup'}}) }}#}
+
+    {{ form_start(registrationForm, {'attr': {'id': 'signup'}}) }}
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(registrationForm.lastname, {
+                    label: 'Nom'
+                }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">{{ form_row(registrationForm.email) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_errors(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.plainPassword,  {'attr': {'id': 'inputPassword'}}, {
+                    label: 'Mot de passe'
+                }) }}
+            </div>
+        </div>
+
+{#        <button type="submit" class="btn">S'inscrire</button>#}
+    {{ form_end(registrationForm) }}
+
     <p>J'ai déjà un compte, <a href="{{ path('app_login') }}">me connecter</a>.</p>
 
-{#    {{ form_start(registrationForm) }}#}
-{#        <div class="row">#}
-{#            <div class="col-12">{{ form_row(registrationForm.email) }}</div>#}
-{#        </div>#}
-{#        <div class="row">#}
-{#            <div class="col-12">#}
-{#                {{ form_row(registrationForm.plainPassword, {#}
-{#                    label: 'Mot de passe'#}
-{#                }) }}#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="row">#}
-{#            <div class="col-12">#}
-{#                {{ form_row(registrationForm.lastname, {#}
-{#                    label: 'Nom'#}
-{#                }) }}#}
-{#            </div>#}
-{#        </div>#}
-{#        {{ form_row(registrationForm.agreeTerms) }}#}
+    <script src="{{ asset('assets/js/custom2.js') }}" defer></script>
 
-{#        <button type="submit" class="btn">Register</button>#}
-{#    {{ form_end(registrationForm) }}#}
 {% endblock %}

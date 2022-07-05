@@ -26,7 +26,8 @@ class ResetPasswordType extends AbstractType
                         'min' => 8,
                         'max' => 60]),
                     new Regex([
-                        'pattern' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^'
+                        'pattern' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^',
+                        'message' => 'Votre mot de passe doit contenir au moins 8 caractères dont 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial parmi (!@#$%^&*)'
                     ])
                 ],
                 'first_options'=>['label'=> 'Mon nouveau mot de passe', 'attr' => ['placeholder'=>'**********']],

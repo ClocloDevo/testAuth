@@ -59,7 +59,8 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'class' => 'form-control col-6'
+                    'class' => 'form-control col-6',
+                    'id' => 'inputPassword'
                 ],
                 'label' => 'Mot de passe',
                 'label_attr' => [
