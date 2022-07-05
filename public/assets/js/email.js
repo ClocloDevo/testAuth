@@ -1,6 +1,4 @@
 const emailEl = document.querySelector('#inputEmail');
-const passwordEl = document.querySelector('#inputPassword');
-
 const form = document.querySelector('#signup');
 
 
@@ -19,38 +17,10 @@ const checkEmail = () => {
     return valid;
 }
 
-// The following checkPassword() function checks the password field if it is provided and matches the required format
-const checkPassword = () => {
-    let valid = false;
-
-    const password = passwordEl.value.trim();
-
-    if (!isRequired(password)) {
-        showError(passwordEl, 'Mot de passe requis');
-    } else if (!isPasswordSecure(password)) {
-        showError(passwordEl, 'Le mot de passe doit contenir au moins 8 caractères dont 1 minuscule,' +
-            ' 1 majuscule, 1 chiffre et 1 caractère spécial' +
-            ' parmi (!@#$%^&*)');
-    } else {
-        showSuccess(passwordEl);
-        valid = true;
-        // console.log(valid);
-    }
-
-    return valid;
-};
-
 // To check if the email is valid, use a regular expression
 const isEmailValid = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // console.log(re.test(email));
     return re.test(email);
-};
-
-// To check if a password is strong
-const isPasswordSecure = (password) => {
-    const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    return re.test(password);
 };
 
 // The following isRequired() function returns true if the input argument is empty
@@ -91,16 +61,11 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     // validate forms
-    let isEmailValid = checkEmail(),
-        isPasswordValid = checkPassword();
-
-    let isFormValid = isEmailValid &&
-        isPasswordValid;
-    // console.log(isFormValid);
+    let isFormValid = checkEmail();
 
     // submit to the server if the form is valid
     if (isFormValid) {
-        form.submit();
+
     }
 });
 
@@ -124,11 +89,7 @@ form.addEventListener('input', debounce(function (e) {
     switch (e.target.id) {
         case 'inputEmail':
             checkEmail();
-            // console.log(checkEmail());
-            break;
-        case 'inputPassword':
-            checkPassword();
-            // console.log(checkPassword());
             break;
     }
 }));
+

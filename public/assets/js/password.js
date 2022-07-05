@@ -1,23 +1,5 @@
-const emailEl = document.querySelector('#inputEmail');
 const passwordEl = document.querySelector('#inputPassword');
-
 const form = document.querySelector('#signup');
-
-
-// The checkEmail() function returns true if the email is provided and valid
-const checkEmail = () => {
-    let valid = false;
-    const email = emailEl.value.trim();
-    if (!isRequired(email)) {
-        showError(emailEl, 'Email requis');
-    } else if (!isEmailValid(email)) {
-        showError(emailEl, 'Email invalide')
-    } else {
-        showSuccess(emailEl);
-        valid = true;
-    }
-    return valid;
-}
 
 // The following checkPassword() function checks the password field if it is provided and matches the required format
 const checkPassword = () => {
@@ -34,17 +16,9 @@ const checkPassword = () => {
     } else {
         showSuccess(passwordEl);
         valid = true;
-        // console.log(valid);
     }
 
     return valid;
-};
-
-// To check if the email is valid, use a regular expression
-const isEmailValid = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // console.log(re.test(email));
-    return re.test(email);
 };
 
 // To check if a password is strong
@@ -91,16 +65,13 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     // validate forms
-    let isEmailValid = checkEmail(),
-        isPasswordValid = checkPassword();
+    let isPasswordValid = checkPassword();
 
-    let isFormValid = isEmailValid &&
-        isPasswordValid;
-    // console.log(isFormValid);
+    let isFormValid = isPasswordValid;
 
     // submit to the server if the form is valid
     if (isFormValid) {
-        form.submit();
+
     }
 });
 
@@ -122,13 +93,9 @@ const debounce = (fn, delay = 500) => {
 // Provides instant feedback
 form.addEventListener('input', debounce(function (e) {
     switch (e.target.id) {
-        case 'inputEmail':
-            checkEmail();
-            // console.log(checkEmail());
-            break;
         case 'inputPassword':
             checkPassword();
-            // console.log(checkPassword());
             break;
     }
 }));
+

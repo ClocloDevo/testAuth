@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ResetPasswordType extends AbstractType
 {
@@ -20,9 +21,14 @@ class ResetPasswordType extends AbstractType
                 'invalid_message'=>'Le mot de passe et la confirmation doivent être identiques',
                 'label' => 'Mon nouveau mot de passe',
                 'required'=>true, //obligatoire à remplir
-                'constraints'=> new Length([
-                    'min' => 8,
-                    'max' => 60]),
+                'constraints'=> [
+                    new Length([
+                        'min' => 8,
+                        'max' => 60]),
+                    new Regex([
+                        'pattern' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^'
+                    ])
+                ],
                 'first_options'=>['label'=> 'Mon nouveau mot de passe', 'attr' => ['placeholder'=>'**********']],
                 'second_options'=>['label'=> 'Confirmez votre nouveau mot de passe', 'attr' => ['placeholder'=>'**********']]
             ])
