@@ -1,4 +1,6 @@
-const passwordEl = document.querySelector('#inputPassword');
+// const passwordEl = document.querySelector('#inputPassword');
+const passwordEl = document.querySelector('input[type="password"]');
+// console.log(passwordEl);
 const form = document.querySelector('#signup');
 
 // The following checkPassword() function checks the password field if it is provided and matches the required format
@@ -6,6 +8,7 @@ const checkPassword = () => {
     let valid = false;
 
     const password = passwordEl.value.trim();
+    console.log(password);
 
     if (!isRequired(password)) {
         showError(passwordEl, 'Mot de passe requis');
@@ -37,12 +40,15 @@ const isBetween = (length, min, max) => length < min || length > max ? false : t
 const showError = (input, message) => {
     // get the form-field element
     const formField = input.parentElement;
+    // console.log(formField);
     // add the error class
     formField.classList.remove('success');
     formField.classList.add('error');
 
     // show the error message
-    const error = formField.querySelector('span');
+    const error = formField.parentElement.querySelector('span'); //dans les forms gérés par SF en twig sans faire
+    // appel du html, le span est n'est pas directement dans l'élément parent de l'input
+    // console.log(error);
     error.textContent = message;
 };
 
@@ -56,7 +62,7 @@ const showSuccess = (input) => {
     formField.classList.add('success');
 
     // hide the error message
-    const error = formField.querySelector('span');
+    const error = formField.parentElement.querySelector('span'); //span n'existe pas dans le form, donc error est null
     error.textContent = '';
 }
 
@@ -71,7 +77,7 @@ form.addEventListener('submit', function (e) {
 
     // submit to the server if the form is valid
     if (isFormValid) {
-
+        form.submit();
     }
 });
 
@@ -92,10 +98,16 @@ const debounce = (fn, delay = 500) => {
 
 // Provides instant feedback
 form.addEventListener('input', debounce(function (e) {
-    switch (e.target.id) {
-        case 'inputPassword':
+    // switch (e.target.id) {
+    //     case 'inputPassword': //pb car l'id ne s'appelle pas comme ça dans tous les forms
+    //         checkPassword();
+    //         break;
+    // }
+    switch (e.target.type) {
+        case 'password': //pb car l'id ne s'appelle pas inputPassword dans tous les forms, donc utiliser le type
             checkPassword();
             break;
     }
+
 }));
 
