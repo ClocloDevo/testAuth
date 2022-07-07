@@ -130,20 +130,26 @@ class __TwigTemplate_61db58ccbb92d4c6a4ac48da78b37929 extends Template
 
 ";
         // line 35
+        echo "        ";
+        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock((isset($context["registrationForm"]) || array_key_exists("registrationForm", $context) ? $context["registrationForm"] : (function () { throw new RuntimeError('Variable "registrationForm" does not exist.', 35, $this->source); })()), 'rest');
+        echo "
+
+";
+        // line 38
         echo "    ";
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["registrationForm"]) || array_key_exists("registrationForm", $context) ? $context["registrationForm"] : (function () { throw new RuntimeError('Variable "registrationForm" does not exist.', 35, $this->source); })()), 'form_end');
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["registrationForm"]) || array_key_exists("registrationForm", $context) ? $context["registrationForm"] : (function () { throw new RuntimeError('Variable "registrationForm" does not exist.', 38, $this->source); })()), 'form_end');
         echo "
 
     <p>J'ai déjà un compte, <a href=\"";
-        // line 37
+        // line 40
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
         echo "\">me connecter</a>.</p>
 
 ";
-        // line 40
+        // line 43
         echo "
     <script src=\"";
-        // line 41
+        // line 44
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("assets/js/email&pw.js"), "html", null, true);
         echo "\" defer></script>
 
@@ -168,7 +174,7 @@ class __TwigTemplate_61db58ccbb92d4c6a4ac48da78b37929 extends Template
 
     public function getDebugInfo()
     {
-        return array (  147 => 41,  144 => 40,  139 => 37,  133 => 35,  126 => 29,  124 => 27,  120 => 26,  110 => 19,  103 => 14,  101 => 12,  95 => 9,  92 => 8,  89 => 6,  79 => 5,  59 => 3,  36 => 1,);
+        return array (  153 => 44,  150 => 43,  145 => 40,  139 => 38,  133 => 35,  126 => 29,  124 => 27,  120 => 26,  110 => 19,  103 => 14,  101 => 12,  95 => 9,  92 => 8,  89 => 6,  79 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -205,6 +211,9 @@ class __TwigTemplate_61db58ccbb92d4c6a4ac48da78b37929 extends Template
                 <span class=\"error\" aria-live=\"polite\"></span>
             </div>
         </div>
+
+{#        To render all the fields that haven't been rendered manually#}
+        {{ form_rest(registrationForm) }}
 
 {#        <button type=\"submit\" class=\"btn\">S'inscrire</button>#}
     {{ form_end(registrationForm) }}
